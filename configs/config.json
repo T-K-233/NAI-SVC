@@ -2,8 +2,8 @@
   "train": {
     "log_interval": 200,
     "eval_interval": 4000,
-    "seed": 233,
-    "epochs": 2000,
+    "seed": 2333,
+    "epochs": 3000,
     "learning_rate": 0.0001,
     "betas": [
       0.8,
@@ -102,6 +102,6 @@
     "use_transformer_flow": false
   },
   "spk": {
-    "origami": 0
+    "tomori": 0
   }
 }
