@@ -1,2 +1,2 @@
-./dataset/44k/ump45/ump45_20.wav
-./dataset/44k/ump45/ump45_59.wav
+./dataset/44k/ump45/ump45_62.wav
+./dataset/44k/ump45/ump45_6.wav
