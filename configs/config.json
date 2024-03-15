@@ -21,7 +21,7 @@
     "c_kl": 1.0,
     "use_sr": true,
     "max_speclen": 512,
-    "port": "8001",
+    "port": "8006",
     "keep_ckpts": 0,
     "all_in_mem": false,
     "vol_aug": true
