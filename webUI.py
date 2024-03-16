@@ -122,7 +122,7 @@ def modelAnalysis(model_path,config_path,cluster_model_path,device,enhance,diff_
         msg += "当前模型的可用音色：\n"
         for i in spks:
             msg += i + " "
-        return sid.update(choices = spks,value=spks[0]), msg
+        return gr.Dropdown(choices = spks, value = spks[0]), msg
     except Exception as e:
         if debug:
             traceback.print_exc()
@@ -266,7 +266,7 @@ def scan_local_models():
 
 def local_model_refresh_fn():
     choices = scan_local_models()
-    return gr.Dropdown.update(choices=choices)
+    return gr.Dropdown(choices=choices)
 
 def debug_change():
     global debug
