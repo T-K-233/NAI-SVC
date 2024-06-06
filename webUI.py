@@ -47,7 +47,7 @@ def upload_mix_append_file(files,sfiles):
         else:
             file_paths = [file.name for file in chain(files,sfiles)]
         p = {file:100 for file in file_paths}
-        return file_paths,mix_model_output1.update(value=json.dumps(p,indent=2))
+        return file_paths, gr.Textbox(value=json.dumps(p,indent=2))
     except Exception as e:
         if debug:
             traceback.print_exc()
@@ -71,9 +71,9 @@ def mix_submit_click(js,mode):
 def updata_mix_info(files):
     try:
         if files is None :
-            return mix_model_output1.update(value="")
+            return gr.Textbox(value="")
         p = {file.name:100 for file in files}
-        return mix_model_output1.update(value=json.dumps(p,indent=2))
+        return gr.Textbox(value=json.dumps(p,indent=2))
     except Exception as e:
         if debug:
             traceback.print_exc()
@@ -132,12 +132,12 @@ def modelAnalysis(model_path,config_path,cluster_model_path,device,enhance,diff_
 def modelUnload():
     global model
     if model is None:
-        return sid.update(choices = [],value=""),"没有模型需要卸载!"
+        return gr.Dropdown(choices = [],value=""),"没有模型需要卸载!"
     else:
         model.unload_model()
         model = None
         torch.cuda.empty_cache()
-        return sid.update(choices = [],value=""),"模型卸载完毕!"
+        return gr.Dropdown(choices = [],value=""),"模型卸载完毕!"
     
 def vc_infer(output_format, sid, audio_path, truncated_basename, vc_transform, auto_f0, cluster_ratio, slice_db, noise_scale, pad_seconds, cl_num, lg_num, lgr_num, f0_predictor, enhancer_adaptive_key, cr_threshold, k_step, use_spk_mix, second_encoding, loudness_envelope_adjustment):
     global model
@@ -199,8 +199,10 @@ def vc_fn(sid, input_audio, output_format, vc_transform, auto_f0,cluster_ratio, 
         if len(audio.shape) > 1:
             audio = librosa.to_mono(audio.transpose(1, 0))
         # 未知原因Gradio上传的filepath会有一个奇怪的固定后缀，这里去掉
-        truncated_basename = Path(input_audio).stem[:-6]
+        truncated_basename = Path(input_audio).stem #[:-6]
+        print("truncated_basename", truncated_basename)
         processed_audio = os.path.join("raw", f"{truncated_basename}.wav")
+        print("truncated_basename", processed_audio)
         soundfile.write(processed_audio, audio, sampling_rate, format="wav")
         output_file = vc_infer(output_format, sid, processed_audio, truncated_basename, vc_transform, auto_f0, cluster_ratio, slice_db, noise_scale, pad_seconds, cl_num, lg_num, lgr_num, f0_predictor, enhancer_adaptive_key, cr_threshold, k_step, use_spk_mix, second_encoding, loudness_envelope_adjustment)
 
@@ -389,7 +391,7 @@ with gr.Blocks(
                                             label="Output Message"
                                          )
                     mix_model_path.change(updata_mix_info,[mix_model_path],[mix_model_output1])
-                    mix_model_upload_button.upload(upload_mix_append_file, [mix_model_upload_button,mix_model_path], [mix_model_path,mix_model_output1])
+                    mix_model_upload_button.upload(upload_mix_append_file, [mix_model_upload_button, mix_model_path], [mix_model_path, mix_model_output1])
                     mix_submit.click(mix_submit_click, [mix_model_output1,mix_mode], [mix_model_output2])
                 
                 with gr.TabItem("模型压缩工具"):
