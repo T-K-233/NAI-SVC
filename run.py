@@ -213,15 +213,31 @@ print("success")
 print(model)
 
 
-_text = "你好，中国"
-_lang = "Auto"
+_text = """
+成功加载模型到设备 NVIDIA GeForce GTX TITAN X 上
+未加载聚类模型或特征检索模型
+未加载扩散模型
+当前模型的可用音色：
+nai 
+"""
+
+
+# good for normal
+# _lang = "zh-CN-XiaoyiNeural"
+
+# more mechanical
+# _lang = "zh-CN-XiaoxiaoNeural"
+
+# pretty good for emotional, need autof0
+_lang = "zh-CN-YunxiNeural"
+
 _gender = "女"
 _rate = 0
 _volume = 0
 sid = "nai"
 output_format = "wav"
 vc_transform = 0
-auto_f0 = True     # 自动f0预测，配合聚类模型f0预测效果更好,会导致变调功能失效（仅限转换语音，歌声勾选此项会究极跑调）
+auto_f0 = False     # 自动f0预测，配合聚类模型f0预测效果更好,会导致变调功能失效（仅限转换语音，歌声勾选此项会究极跑调）
 cluster_ratio = 0
 slice_db = -40
 noise_scale = 0.4
